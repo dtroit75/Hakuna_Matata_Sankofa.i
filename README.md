@@ -47,14 +47,16 @@ Below are common feature modules for Hakuna Matata Sankofa.i. Your deployment ma
 ### A. Cultural Symbol Intelligence (e.g., Adinkra)
 - Symbol recognition (image → symbol candidates)
 - Meaning/usage lookup (symbol → description + cultural context)
-- Pattern analysis (motif detection, similarity search)
-- Design assist (generate pattern variations that remain stylistically aligned)
+- Pattern analysis 
+- Design assist 
 
 ### B. Oral History Preservation
 - Real-time transcription (speech → text)
 - Multi-language support (where available)
-- Speaker diarization (optional)
+- Speaker diarization 
 - Summaries & story indexing (themes, places, names)
+- <img width="1291" height="623" alt="long long age" src="https://github.com/user-attachments/assets/4819ca38-ef97-4211-87d7-b71d26e481ee" />
+
 
 ### C. Heritage-Aware Generative Design
 - Prompting templates that embed cultural constraints
@@ -78,6 +80,8 @@ Our commitment to culture extends to the physical world. Through the **Shop Page
 
 ### Digital Doubles & Real-World Rewards
 Mint unique **Digital Doubles** of exclusive Hakuna Matata Merch. These digital assets are not just collectibles; they are your ticket to the future of fashion.
+![Uploading hakuna mataaaa.PNG…]()
+
 
 Holding a Digital Double can unlock:
 - Exclusive discounts
