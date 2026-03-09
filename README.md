@@ -122,79 +122,23 @@ Holding a Digital Double can unlock:
 - Package manager (npm/pnpm/yarn)
 - (Optional) Docker
 
-### Install
-```bash
-git clone <YOUR_REPO_URL>
-cd hakuna-matata-sankofa
-npm install
-Environment Variables
-Create .env:
 
-# App
-APP_ENV=development
-APP_URL=http://localhost:3000
-
-# Storage
-STORAGE_PROVIDER=s3
-S3_BUCKET=...
-S3_REGION=...
-
-# AI services
-AI_PROVIDER=...
-AI_API_KEY=...
-
-# Auth
-AUTH_PROVIDER=...
-JWT_SECRET=...
-
-# Blockchain / Marketplace
-CHAIN_ID=...
-NFT_CONTRACT_ADDRESS=...
-RPC_URL=...
-Run
-npm run dev
-Deployment
-Recommended: CI/CD pipeline (GitHub Actions/GitLab CI)
-Use separate environments: dev/staging/prod
-Store secrets in a secret manager (not in repo)
-Enable monitoring:
-API logs + error tracking
-performance metrics
-audit logs for content and redemptions
 
 ##Roadmap
 Near-term
 
 Expand symbol library and references
 Improve transcription accuracy for targeted African languages
-Add “Edit & Confirm” workflows and provenance notes everywhere
-Launch Marketplace redemption rules + dashboard
-Mid-term
-
 Community moderation and contributor program
 Offline-first mobile capture for oral histories
-Vector similarity search for motifs and patterns
+
 Long-term
 
 Partnerships with cultural institutions and archives
-Scholarship/creator grants funded by marketplace revenue
 Educational tracks for youth: AI literacy + heritage stewardship
-Contributing
+
 We welcome contributions aligned with the platform’s mission.
 
-How to contribute
-Open an issue describing the change (bug, feature, dataset request)
-Submit a PR with:
-clear description
-tests or validation steps
-documentation updates
-
-Contribution guidelines (recommended)
-No unverified cultural claims
-Cite sources for symbol meanings and historical context
-Respect community boundaries and restricted knowledge
-
-Credits
 
 Credits: (https://sankofai.org/ethical-ai/) 
 Website/App: https://ai.studio/apps/ab678b90-7038-426d-95be-9635d4a62698?fullscreenApplet=true
