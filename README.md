@@ -5,35 +5,21 @@ Hakuna Matata Sankofa.i — Platform README
 
 Hakuna Matata Sankofa.i is more than just a platform; it is a digital bridge connecting the profound wisdom of African ancestry with the cutting-edge capabilities of modern Artificial Intelligence. Inspired by the Akan proverb **“Sankofa”** — which teaches us that it is not taboo to go back and fetch what we have forgotten — we utilize AI to preserve, analyze, and celebrate the rich cultural tapestry of the continent.
 
+![Lion King GIF](https://github.com/user-attachments/assets/d7871a8f-ef9f-44e4-b935-93b8df08eba9)
+
+
 > “The youth of Africa are the engine of the continent's transformation. By embracing our roots while mastering the tools of the future, we create a path that is uniquely ours.”
 >
 > — Inspired by the vision of African Leaders
 
-Reference App (AI Studio)
-------------------------
+<img width="912" height="1169" alt="Gemini_Generated_Image_6nccia6nccia6ncc" src="https://github.com/user-attachments/assets/d02c42c2-ed8f-4cbd-ac36-0cae30d34ff9" />
+
+
 **Platform Link (reference / live app):**  
 https://ai.studio/apps/ab678b90-7038-426d-95be-9635d4a62698?fullscreenApplet=true
 
-> Note: This README describes the product vision and typical implementation approach for the platform represented by the reference app link above. Update any sections (features, endpoints, env vars) to match your deployed configuration.
+<img width="1266" height="624" alt="hOME pAGE" src="https://github.com/user-attachments/assets/0e52aaaf-7364-489f-a1ba-f1f5d6e36cba" />
 
-Table of Contents
------------------
-1. Overview
-2. Vision & Cultural Context (Sankofa)
-3. Core Capabilities
-4. The New Age Tech Ecosystem
-5. Hakuna Matata Safari Marketplace (NFT + Merch)
-6. User Journeys
-7. Architecture (Suggested)
-8. Data & Content Model (Suggested)
-9. AI & Model Responsibilities (Suggested)
-10. Security, Privacy & Ethics
-11. Accessibility & Inclusion
-12. Getting Started (Local Dev Template)
-13. Deployment
-14. Roadmap
-15. Contributing
-16. License & Credits
 
 1) Overview
 -----------
@@ -97,6 +83,7 @@ Holding a Digital Double can unlock:
 - Exclusive discounts
 - Early access to drops
 - Member-only releases and experiences
+
 
 
 6) User Journeys
