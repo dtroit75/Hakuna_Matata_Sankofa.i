@@ -1,0 +1,8 @@
+{
+  "name": "Hakuna Matata Sankofa.i",
+  "description": "An AI-powered platform connecting users with the ancestral knowledge of Swahili and Andikra cultures through image analysis, storytelling, and interactive design.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
