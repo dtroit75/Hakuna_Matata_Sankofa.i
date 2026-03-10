@@ -20,6 +20,9 @@ https://ai.studio/apps/ab678b90-7038-426d-95be-9635d4a62698?fullscreenApplet=tru
 
 <img width="1266" height="624" alt="hOME pAGE" src="https://github.com/user-attachments/assets/0e52aaaf-7364-489f-a1ba-f1f5d6e36cba" />
 
+<img width="1272" height="611" alt="sankoooofa" src="https://github.com/user-attachments/assets/e6800271-2169-4079-8004-be3ea596cd05" />
+
+<img width="1304" height="618" alt="ssankff" src="https://github.com/user-attachments/assets/67149143-af2e-47c1-89d7-e6aff4505c26" />
 
 1) Overview
 -----------
