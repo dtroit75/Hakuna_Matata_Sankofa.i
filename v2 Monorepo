@@ -1,0 +1,257 @@
+V2 Monorepo 
+BasePay feature
+
+
+Full Folder Structure
+hakuna-matata-nft-marketplace-v2/
+│
+├── .env.example
+├── package.json
+├── README.md
+│
+├── packages/
+│   ├── hardhat/
+│   │   ├── contracts/
+│   │   │   └── MarketplaceNFT.sol
+│   │   ├── deploy/
+│   │   │   └── deployNFT.ts
+│   │   ├── test/
+│   │   │   └── nft.test.ts
+│   │   ├── hardhat.config.ts
+│   │   └── package.json
+│   │
+│   └── nextjs/
+│       ├── app/
+│       │   ├── page.tsx
+│       │   ├── marketplace/
+│       │   │   └── index.tsx
+│       │   └── checkout/
+│       │       └── [tokenId].tsx
+│       │
+│       ├── components/
+│       │   ├── BasePayButton.tsx
+│       │   ├── WalletConnect.tsx
+│       │   └── NFTCard.tsx
+│       │
+│       ├── hooks/
+│       │   ├── useWallet.ts
+│       │   └── useNFTs.ts
+│       │
+│       ├── api/
+│       │   └── ipfs.ts
+│       │
+│       ├── abis/
+│       │   └── MarketplaceNFT.json
+│       │
+│       ├── public/
+│       │   └── placeholder.png
+│       │
+│       ├── styles/
+│       │   └── globals.css
+│       │
+│       ├── package.json
+│       └── tsconfig.json
+File Contents (Placeholder + Minimal Setup)
+1️⃣ .env.example
+NEXT_PUBLIC_BASE_RPC_URL=https://base-testnet.rpc.url
+NEXT_PUBLIC_CHAIN_ID=84531
+NEXT_PUBLIC_NFT_CONTRACT_ADDRESS=0xYourNFTContractAddress
+NEXT_PUBLIC_BASE_PAY_RECIPIENT=0xMarketplaceRecipientAddress
+IPFS_API_KEY=your_nft_storage_api_key
+PRIVATE_KEY=0xYourBackendPrivateKey
+2️⃣ packages/hardhat/package.json
+{
+  "name": "hardhat",
+  "private": true,
+  "dependencies": {
+    "hardhat": "^2.18.0",
+    "ethers": "^6.8.0",
+    "dotenv": "^16.3.1",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@openzeppelin/contracts": "^4.9.3"
+  },
+  "scripts": {
+    "node": "npx hardhat node",
+    "deploy": "npx hardhat run deploy/deployNFT.ts --network base",
+    "test": "npx hardhat test"
+  }
+}
+3️⃣ packages/nextjs/package.json
+{
+  "name": "nextjs",
+  "private": true,
+  "dependencies": {
+    "next": "^13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ethers": "^6.8.0",
+    "axios": "^1.5.0",
+    "nft.storage": "^6.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "@types/react": "^18.2.14",
+    "@types/node": "^20.5.1",
+    "tailwindcss": "^3.3.6",
+    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.15"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+4️⃣ packages/hardhat/contracts/MarketplaceNFT.sol
+
+(ERC721 with marketplace + listing)
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract MarketplaceNFT is ERC721URIStorage, Ownable {
+    uint256 public tokenCounter;
+    struct Listing { address seller; uint256 price; bool active; }
+    mapping(uint256 => Listing) public listings;
+
+    event NFTMinted(uint256 tokenId, address owner, string tokenURI);
+    event NFTListed(uint256 tokenId, uint256 price, address seller);
+    event NFTSold(uint256 tokenId, uint256 price, address buyer);
+
+    constructor() ERC721("SafariNFT", "SNFT") { tokenCounter = 1; }
+
+    function mintNFT(address recipient, string memory tokenURI) external onlyOwner returns (uint256) {
+        uint256 tokenId = tokenCounter;
+        _safeMint(recipient, tokenId);
+        _setTokenURI(tokenId, tokenURI);
+        emit NFTMinted(tokenId, recipient, tokenURI);
+        tokenCounter++;
+        return tokenId;
+    }
+
+    function listNFT(uint256 tokenId, uint256 price) external {
+        require(ownerOf(tokenId) == msg.sender, "Not NFT owner");
+        listings[tokenId] = Listing(msg.sender, price, true);
+        emit NFTListed(tokenId, price, msg.sender);
+    }
+
+    function buyNFT(uint256 tokenId) external payable {
+        Listing memory listing = listings[tokenId];
+        require(listing.active, "NFT not for sale");
+        require(msg.value >= listing.price, "Insufficient payment");
+        payable(listing.seller).transfer(listing.price);
+        _transfer(listing.seller, msg.sender, tokenId);
+        listings[tokenId].active = false;
+        emit NFTSold(tokenId, listing.price, msg.sender);
+    }
+}
+5️⃣ packages/hardhat/deploy/deployNFT.ts
+import { ethers } from "hardhat";
+
+async function main() {
+  const MarketplaceNFT = await ethers.getContractFactory("MarketplaceNFT");
+  const marketplace = await MarketplaceNFT.deploy();
+  await marketplace.waitForDeployment();
+  console.log("MarketplaceNFT deployed to:", marketplace.target);
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
+6️⃣ packages/hardhat/hardhat.config.ts
+import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-toolbox";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+const config: HardhatUserConfig = {
+  solidity: "0.8.20",
+  networks: {
+    base: {
+      url: process.env.NEXT_PUBLIC_BASE_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY!],
+      chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+    },
+  },
+};
+
+export default config;
+7️⃣ packages/nextjs/api/ipfs.ts
+import { NFTStorage, File } from "nft.storage";
+
+const client = new NFTStorage({ token: process.env.IPFS_API_KEY! });
+
+export async function uploadNFT(imageFile: File, name: string, description: string) {
+  const metadata = await client.store({
+    name,
+    description,
+    image: imageFile,
+  });
+  return metadata.url; // IPFS CID URL
+}
+8️⃣ packages/nextjs/components/BasePayButton.tsx
+type Props = { amount: string; recipient: string; metadata: any; };
+
+export default function BasePayButton({ amount, recipient, metadata }: Props) {
+  const handleClick = async () => {
+    alert(`Base Pay checkout: ${amount} BASE to ${recipient}`);
+    // Replace with actual Base Pay SDK call
+  };
+  return <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={handleClick}>Buy with Base Pay</button>;
+}
+9️⃣ packages/nextjs/app/checkout/[tokenId].tsx
+import { useRouter } from "next/router";
+import BasePayButton from "../../components/BasePayButton";
+
+export default function Checkout() {
+  const router = useRouter();
+  const { tokenId } = router.query;
+
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Checkout NFT #{tokenId}</h1>
+      <BasePayButton
+        amount="0.05"
+        recipient={process.env.NEXT_PUBLIC_BASE_PAY_RECIPIENT!}
+        metadata={{ nftId: tokenId, collection: "SafariNFT" }}
+      />
+    </div>
+  );
+}
+10️⃣ packages/nextjs/hooks/useWallet.ts
+import { useState, useEffect } from "react";
+import { ethers } from "ethers";
+
+export default function useWallet() {
+  const [account, setAccount] = useState<string | null>(null);
+
+  const connect = async () => {
+    if ((window as any).ethereum) {
+      const provider = new ethers.BrowserProvider((window as any).ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      setAccount(accounts[0]);
+    }
+  };
+
+  return { account, connect };
+}
+✅ Workflow Summary
+
+npm run install:all → install all dependencies
+
+npm run dev → start Hardhat + Next.js concurrently
+
+npm run deploy → deploy NFT marketplace to Base
+
+npm run test → run Hardhat tests
+
+Browse http://localhost:3000 → connect wallet → Base Pay checkout → mint NFT
+
+npm run build && npm run start → production frontend
+
+Vercel deployment → configure environment variables → live marketplace
